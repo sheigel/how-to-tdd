@@ -1,0 +1,35 @@
+{
+  "name": "how-to-tdd",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest --watchAll",
+    "postinstall": "./node_modules/.bin/typings i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thinslices/how-to-tdd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thinslices/how-to-tdd/issues"
+  },
+  "homepage": "https://github.com/Thinslices/how-to-tdd#readme",
+  "devDependencies": {
+    "jest": "^18.1.0",
+    "ts-jest": "^18.0.3",
+    "typescript": "^2.1.6",
+    "typings": "^2.1.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
