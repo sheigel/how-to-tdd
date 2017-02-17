@@ -7,5 +7,5 @@ You could just not care and commit it without making sure. Besides not being a p
 
 # Harry Potter :
 
-To try and encourage more sales of the 5 different Harry Potter books the bookshop has decided build a web page that should look like the following wireframe:
+To try and encourage more sales of the 5 different Harry Potter books the bookshop has decided build a web page that should look like the following [sketch](https://thinslices.atlassian.net/wiki/x/ICJ_C)
 
