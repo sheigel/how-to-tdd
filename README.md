@@ -11,15 +11,19 @@ You could just not care and commit it without making sure. Besides not being a p
 ~~~
 git clone git@github.com:Thinslices/how-to-tdd.git
 ~~~
-2.Install the dependencies
+2.Switch to the-stack branch
+~~~
+git checkout the-stack
+~~~
+3.Install the dependencies
 ~~~~
 npm install
 ~~~~
-3.Start running tests and watch for changes
+4.Start running tests and watch for changes
 ~~~~
 npm test
 ~~~~
-4.Take a look at [Jest library](https://facebook.github.io/jest/docs/getting-started.html#content)
+5.Take a look at [Jest library](https://facebook.github.io/jest/docs/getting-started.html#content)
 
 # A stack works like a stack of plates.
 
