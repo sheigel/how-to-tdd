@@ -1,14 +1,16 @@
 const BOOK_PRICE = 8
-
-function discount(uniqueBooksCount: number) {
-    if (uniqueBooksCount === 3) {
-        return 0.10
-    }
-    if (uniqueBooksCount === 2) {
-        return  0.05
-    }
-    return 0
+const BOOK_DISCOUNTS={
+    0:0,
+    1:0,
+    2:0.05,
+    3:0.10,
+    4:0.20,
+    5:0.25
 }
+function discount(uniqueBooksCount: number) {
+    return BOOK_DISCOUNTS[uniqueBooksCount]
+}
+
 
 export default function calculateCost(bookList: Array<string>) {
     if (!(bookList instanceof Array)) {
@@ -16,9 +18,14 @@ export default function calculateCost(bookList: Array<string>) {
     }
 
     const booksCount = bookList.length
-    const uniqueBooks = bookList.filter(book =>
-        bookList.indexOf(book) === bookList.lastIndexOf(book)
-    )
+    const uniqueBooks = Object.keys(bookList.reduce((acc, el)=>{
+        acc[el] = null
+        return acc
+    }, {}))
     const uniqueBooksCount = uniqueBooks.length
-    return BOOK_PRICE * booksCount * (1 - discount(uniqueBooksCount))
+    if (booksCount === uniqueBooksCount) {
+        return BOOK_PRICE * booksCount * (1 - discount(uniqueBooksCount))
+    }
+    return BOOK_PRICE * uniqueBooksCount * (1 - discount(uniqueBooksCount)) +
+        (booksCount - uniqueBooksCount) * BOOK_PRICE
 }
