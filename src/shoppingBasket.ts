@@ -9,11 +9,12 @@ export default function calculateCost(bookList: Array<string>) {
     const uniqueBooks = bookList.filter(book =>
         bookList.indexOf(book) === bookList.lastIndexOf(book)
     )
+    var discount = 0
     if (uniqueBooks.length === 3) {
-        return BOOK_PRICE * booksCount * (1 - 0.10)
+        discount = 0.10
     }
     if (uniqueBooks.length === 2) {
-        return BOOK_PRICE * booksCount * (1 - 0.05)
+        discount = 0.05
     }
-    return BOOK_PRICE * booksCount * (1 - 0)
+    return BOOK_PRICE * booksCount * (1 - discount)
 }
