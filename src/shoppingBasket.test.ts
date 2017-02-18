@@ -1,4 +1,6 @@
 import calculateCost from './shoppingBasket'
+import {booksOrganizedInSeries} from './shoppingBasket'
+import Describe = jest.Describe
 
 describe('shopping cart', () => {
     test(`no book list costs 0`, () => {
@@ -39,10 +41,44 @@ describe('shopping cart', () => {
     })
     test(`complete basket discount`, () => {
         expect(calculateCost([
-            'Harry Potter I','Harry Potter I',
+            'Harry Potter I', 'Harry Potter I',
             'Harry Potter II', 'Harry Potter II',
             'Harry Potter III', 'Harry Potter III',
             'Harry Potter IV',
             'Harry Potter V'])).toEqual(51.6)
+    })
+})
+
+describe('books organized in series', () => {
+    test(`1 book: generates 1 series`, () => {
+        const actual = booksOrganizedInSeries(['H1'])
+        expect(actual).toEqual([{'H1': 'H1'}])
+    })
+    test(`5 books: different books are part of 1 series`, () => {
+        const actual = booksOrganizedInSeries(['H1', 'H2', 'H3', 'H4', 'H5'])
+        expect(actual).toEqual([{
+            'H1': 'H1',
+            'H2': 'H2',
+            'H3': 'H3',
+            'H4': 'H4',
+            'H5': 'H5'
+        }])
+    })
+    test(`5 books: different books are filling series and identical books are generating series`, () => {
+        const actual = booksOrganizedInSeries([
+            'H1', 'H2',
+            'H2', 'H1',
+            'H1'
+        ])
+        expect(actual).toEqual([
+            {
+                'H1': 'H1',
+                'H2': 'H2',
+            }, {
+                'H1': 'H1',
+                'H2': 'H2',
+            }, {
+                'H1': 'H1'
+            }])
     })
 })

@@ -11,7 +11,7 @@ function discount(uniqueBooksCount: number) {
     return BOOK_DISCOUNTS[uniqueBooksCount]
 }
 
-function bookSeries(bookList: Array<string>) {
+export function booksOrganizedInSeries(bookList: Array<string>) {
     const series = []
 
     function getBookSeries(book) {
@@ -27,9 +27,8 @@ function bookSeries(bookList: Array<string>) {
 
     for (let bIdx = 0; bIdx < bookList.length; bIdx++) {
         const book = bookList[bIdx];
-        getBookSeries(book)[book]=book;
+        getBookSeries(book)[book] = book;
     }
-    console.log('the series',series)
     return series;
 }
 
@@ -39,7 +38,11 @@ export default function calculateCost(bookList: Array<string>) {
     }
 
     const booksCount = bookList.length
-    const uniqueBooksCount = bookSeries(bookList).length
+    const uniqueBooksCount = booksOrganizedInSeries(bookList).length
+    return booksOrganizedInSeries(bookList)
+        .map(series => Object.keys(series).length)
+        .map(booksInSeries => booksInSeries * (1 - BOOK_DISCOUNTS[booksInSeries]) * BOOK_PRICE)
+        .reduce((acc, price) => acc + price, 0)
     if (booksCount === uniqueBooksCount) {
         return BOOK_PRICE * booksCount * (1 - discount(uniqueBooksCount))
     }
