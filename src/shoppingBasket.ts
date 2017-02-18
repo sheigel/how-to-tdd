@@ -7,8 +7,8 @@ const BOOK_DISCOUNTS = {
     4: 0.20,
     5: 0.25
 }
-function discount(uniqueBooksCount: number) {
-    return BOOK_DISCOUNTS[uniqueBooksCount]
+function discountedPrice(uniqueBooksCount: number) {
+    return (1 - BOOK_DISCOUNTS[uniqueBooksCount]) * BOOK_PRICE
 }
 
 export function booksOrganizedInSeries(bookList: Array<string>) {
@@ -33,9 +33,8 @@ export function booksOrganizedInSeries(bookList: Array<string>) {
 }
 
 export default function calculateCost(bookList: Array<string>) {
-
     return booksOrganizedInSeries(bookList)
         .map(series => Object.keys(series).length)
-        .map(booksInSeries => booksInSeries * (1 - BOOK_DISCOUNTS[booksInSeries]) * BOOK_PRICE)
+        .map(booksInSeries => booksInSeries * discountedPrice(booksInSeries))
         .reduce((acc, price) => acc + price, 0)
 }
