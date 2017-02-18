@@ -33,19 +33,9 @@ export function booksOrganizedInSeries(bookList: Array<string>) {
 }
 
 export default function calculateCost(bookList: Array<string>) {
-    if (!(bookList instanceof Array)) {
-        throw new Error("Book list should be an array")
-    }
 
-    const booksCount = bookList.length
-    const uniqueBooksCount = booksOrganizedInSeries(bookList).length
     return booksOrganizedInSeries(bookList)
         .map(series => Object.keys(series).length)
         .map(booksInSeries => booksInSeries * (1 - BOOK_DISCOUNTS[booksInSeries]) * BOOK_PRICE)
         .reduce((acc, price) => acc + price, 0)
-    if (booksCount === uniqueBooksCount) {
-        return BOOK_PRICE * booksCount * (1 - discount(uniqueBooksCount))
-    }
-    return BOOK_PRICE * uniqueBooksCount * (1 - discount(uniqueBooksCount)) +
-        (booksCount - uniqueBooksCount) * BOOK_PRICE
 }

@@ -6,9 +6,6 @@ describe('shopping cart', () => {
     test(`no book list costs 0`, () => {
         expect(calculateCost([])).toEqual(0)
     })
-    test('book list should be an array', () => {
-        expect(() => calculateCost('some value' as any)).toThrowError('Book list should be an array')
-    })
     test(`1 book costs 8`, () => {
         expect(calculateCost(['Harry Potter I'])).toEqual(8)
     })
