@@ -10,26 +10,20 @@ const BOOK_DISCOUNTS = {
 function discountedPrice(uniqueBooksCount: number) {
     return (1 - BOOK_DISCOUNTS[uniqueBooksCount]) * BOOK_PRICE
 }
+function extractASeries(books: Array<string>): any {
+    return books.reduce((acc, b) =>
+            acc.series[b] ?
+                {series: acc.series, remainingBooks: [...acc.remainingBooks, b]} :
+                {series: Object.assign({}, acc.series, {[b]: b}), remainingBooks: acc.remainingBooks}
 
-export function booksOrganizedInSeries(bookList: Array<string>) {
-    const series = []
+        , {series: {}, remainingBooks: []})
+}
 
-    function getBookSeries(book) {
-        for (let sIdx = 0; sIdx < series.length; sIdx++) {
-            if (!series[sIdx][book]) {
-                return series[sIdx]
-            }
-        }
-        const currentSeries = {}
-        series.push(currentSeries);
-        return currentSeries;
-    }
-
-    for (let bIdx = 0; bIdx < bookList.length; bIdx++) {
-        const book = bookList[bIdx];
-        getBookSeries(book)[book] = book;
-    }
-    return series;
+export function booksOrganizedInSeries(books: Array<string>) {
+    if (books.length === 0)
+        return []
+    const {series, remainingBooks} = extractASeries(books)
+    return [series, ...booksOrganizedInSeries(remainingBooks)]
 }
 
 export default function calculateCost(bookList: Array<string>) {
