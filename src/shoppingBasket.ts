@@ -10,10 +10,10 @@ export default function calculateCost(bookList: Array<string>) {
         bookList.indexOf(book) === bookList.lastIndexOf(book)
     )
     if (uniqueBooks.length === 3) {
-        return BOOK_PRICE * booksCount * 0.90
+        return BOOK_PRICE * booksCount * (1 - 0.10)
     }
     if (uniqueBooks.length === 2) {
-        return BOOK_PRICE * booksCount * 0.95
+        return BOOK_PRICE * booksCount * (1 - 0.05)
     }
-    return BOOK_PRICE * booksCount
+    return BOOK_PRICE * booksCount * (1 - 0)
 }
