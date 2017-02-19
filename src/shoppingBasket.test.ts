@@ -1,5 +1,5 @@
 import calculateCost from './shoppingBasket'
-import {booksOrganizedInSeries} from './shoppingBasket'
+import {extractAllBookSeries} from './shoppingBasket'
 import Describe = jest.Describe
 
 describe('shopping cart', () => {
@@ -48,34 +48,33 @@ describe('shopping cart', () => {
 
 describe('books organized in series', () => {
     test(`1 book: generates 1 series`, () => {
-        const actual = booksOrganizedInSeries(['H1'])
-        expect(actual).toEqual([{'H1': 'H1'}])
+        const actual = extractAllBookSeries(['H1'])
+        expect(actual).toEqual([['H1']])
     })
     test(`5 books: different books are part of 1 series`, () => {
-        const actual = booksOrganizedInSeries(['H1', 'H2', 'H3', 'H4', 'H5'])
-        expect(actual).toEqual([{
-            'H1': 'H1',
-            'H2': 'H2',
-            'H3': 'H3',
-            'H4': 'H4',
-            'H5': 'H5'
-        }])
+        const actual = extractAllBookSeries(['H1', 'H2', 'H3', 'H4', 'H5'])
+        expect(actual).toEqual([[
+            'H1',
+            'H2',
+            'H3',
+            'H4',
+            'H5'
+        ]])
     })
     test(`5 books: different books are filling series and identical books are generating series`, () => {
-        const actual = booksOrganizedInSeries([
+        const actual = extractAllBookSeries([
             'H1', 'H2',
             'H2', 'H1',
             'H1'
         ])
         expect(actual).toEqual([
-            {
-                'H1': 'H1',
-                'H2': 'H2',
-            }, {
-                'H1': 'H1',
-                'H2': 'H2',
-            }, {
-                'H1': 'H1'
-            }])
+            [
+                'H1',
+                'H2',
+            ], [
+                'H2', 'H1',
+            ], [
+                'H1'
+            ]])
     })
 })

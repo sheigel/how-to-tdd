@@ -10,25 +10,25 @@ const BOOK_DISCOUNTS = {
 function discountedPrice(uniqueBooksCount: number) {
     return (1 - BOOK_DISCOUNTS[uniqueBooksCount]) * BOOK_PRICE
 }
-function extractASeries(books: Array<string>): any {
+function extractNextBookSeries(books: Array<string>): any {
     return books.reduce((acc, b) =>
-            acc.series[b] ?
+            acc.series.includes(b) ?
                 {series: acc.series, remainingBooks: [...acc.remainingBooks, b]} :
-                {series: Object.assign({}, acc.series, {[b]: b}), remainingBooks: acc.remainingBooks}
+                {series: [...acc.series, b], remainingBooks: acc.remainingBooks}
 
-        , {series: {}, remainingBooks: []})
+        , {series: new Array<string>(), remainingBooks: []})
 }
 
-export function booksOrganizedInSeries(books: Array<string>) {
+export function extractAllBookSeries(books: Array<string>) {
     if (books.length === 0)
         return []
-    const {series, remainingBooks} = extractASeries(books)
-    return [series, ...booksOrganizedInSeries(remainingBooks)]
+    const {series, remainingBooks} = extractNextBookSeries(books)
+    return [series, ...extractAllBookSeries(remainingBooks)]
 }
 
 export default function calculateCost(bookList: Array<string>) {
-    return booksOrganizedInSeries(bookList)
-        .map(series => Object.keys(series).length)
+    return extractAllBookSeries(bookList)
+        .map(series => series.length)
         .map(booksInSeries => booksInSeries * discountedPrice(booksInSeries))
         .reduce((acc, price) => acc + price, 0)
 }
