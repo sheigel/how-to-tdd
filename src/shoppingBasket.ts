@@ -16,7 +16,7 @@ function extractNextBookSeries(books: Array<string>): any {
                 {series: acc.series, remainingBooks: [...acc.remainingBooks, b]} :
                 {series: [...acc.series, b], remainingBooks: acc.remainingBooks}
 
-        , {series: new Array<string>(), remainingBooks: []})
+        , {series: [], remainingBooks: []})
 }
 
 export function extractAllBookSeries(books: Array<string>) {
@@ -29,6 +29,6 @@ export function extractAllBookSeries(books: Array<string>) {
 export default function calculateCost(bookList: Array<string>) {
     return extractAllBookSeries(bookList)
         .map(series => series.length)
-        .map(booksInSeries => booksInSeries * discountedPrice(booksInSeries))
+        .map(booksInSeriesCount => booksInSeriesCount * discountedPrice(booksInSeriesCount))
         .reduce((acc, price) => acc + price, 0)
 }
